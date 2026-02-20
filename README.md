@@ -46,6 +46,21 @@ Abra: `http://127.0.0.1:7071`
 5. `git remote add origin <URL_DO_REPO>`
 6. `git push -u origin main`
 
+## Usar com o próprio agente no OpenClaw
+
+Tu pode pedir pro próprio agente importar e configurar o starter no teu PC.
+
+### Passo a passo (comando para o agente)
+1. Clonar o repo:
+   - `git clone https://github.com/Ad3Digital/GhostOrchestrator-Starter.git`
+2. Entrar na pasta do projeto
+3. Rodar instalação (`install.ps1` no Windows ou `install.sh` no Linux/macOS)
+4. Rodar setup (`python setup.py`)
+5. Subir dashboard (`python dashboard/server.py`)
+
+### Exemplo de pedido no OpenClaw
+"Julius, clona o repo GhostOrchestrator-Starter, instala as dependências, roda o setup e sobe o dashboard."
+
 ## Segurança
 - Nunca commitar tokens/credenciais
 - Usar `.env` local (baseado no `.env.example`)
