@@ -1,0 +1,13 @@
+{
+  "risk_policy": {
+    "low": { "auto_execute": true, "needs_human_approval": false },
+    "medium": { "auto_execute": true, "needs_human_approval": false },
+    "high": { "auto_execute": false, "needs_human_approval": true }
+  },
+  "retry": {
+    "default_max_retries": 2
+  },
+  "required_fields": [
+    "job_id", "title", "goal", "owner_agent", "risk_level", "status", "created_at", "updated_at"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "title": "Pipeline Suporte",
+  "goal": "Classificar ticket e responder com SLA",
+  "owner_agent": "main",
+  "risk_level": "low",
+  "then": [
+    "Classificar prioridade",
+    "Rascunhar resposta",
+    "Enviar resposta"
+  ]
+}

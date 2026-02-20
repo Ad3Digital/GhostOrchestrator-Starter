@@ -1,0 +1,12 @@
+{
+  "title": "Pipeline Tráfego",
+  "goal": "Coletar métricas, diagnosticar e recomendar ações",
+  "owner_agent": "main",
+  "risk_level": "high",
+  "then": [
+    "Puxar métricas 7d",
+    "Detectar gargalo",
+    "Gerar handoff A2H",
+    "Aguardar aprovação"
+  ]
+}

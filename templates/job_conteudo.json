@@ -1,0 +1,12 @@
+{
+  "title": "Pipeline Conteúdo",
+  "goal": "Gerar pauta, roteiros e revisão",
+  "owner_agent": "ghosty",
+  "risk_level": "medium",
+  "then": [
+    "Gerar 5 hooks",
+    "Selecionar melhor hook",
+    "Criar roteiro 45s",
+    "Revisão final"
+  ]
+}

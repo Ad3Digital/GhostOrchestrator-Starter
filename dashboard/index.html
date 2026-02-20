@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ghost Orchestrator Dashboard</title>
+  <style>
+    body{font-family:Arial,sans-serif;background:#0f1115;color:#e8e8e8;margin:0}
+    .top{padding:14px 18px;background:#171b22;display:flex;justify-content:space-between;align-items:center}
+    .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:12px}
+    .col{background:#171b22;border:1px solid #2a3140;border-radius:10px;padding:10px;min-height:300px}
+    .card{background:#10151d;border:1px solid #2a3140;border-radius:8px;padding:8px;margin:8px 0}
+    .muted{color:#a0a8b8;font-size:12px}
+    .log{padding:12px}
+    .pill{padding:2px 8px;border-radius:999px;font-size:12px;border:1px solid #2a3140}
+    button{background:#2a7cff;border:none;color:white;padding:8px 10px;border-radius:8px;cursor:pointer}
+    pre{white-space:pre-wrap;background:#10151d;border:1px solid #2a3140;padding:10px;border-radius:8px;max-height:220px;overflow:auto}
+  </style>
+</head>
+<body>
+  <div class="top">
+    <div>
+      <h3 style="margin:0">⚔️ Ghost Orchestrator Dashboard</h3>
+      <div class="muted" id="meta">carregando...</div>
+    </div>
+    <div>
+      <button onclick="loadAll()">Atualizar</button>
+    </div>
+  </div>
+
+  <div class="grid" id="board"></div>
+  <div class="log">
+    <h4>Últimos eventos</h4>
+    <pre id="events"></pre>
+  </div>
+
+<script>
+const STATES=['backlog','in_progress','review','done'];
+function esc(s){return (s||'').replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));}
+async function loadAll(){
+  const q=await fetch('/api/queue').then(r=>r.json());
+  const h=await fetch('/api/history?limit=20').then(r=>r.json());
+  document.getElementById('meta').innerText=`jobs: ${q.jobs.length} | atualizado: ${new Date().toLocaleString()}`;
+  const board=document.getElementById('board'); board.innerHTML='';
+  for(const s of STATES){
+    const col=document.createElement('div'); col.className='col';
+    col.innerHTML=`<h4>${s}</h4>`;
+    q.jobs.filter(j=>j.status===s).forEach(j=>{
+      const div=document.createElement('div'); div.className='card';
+      div.innerHTML=`<b>${esc(j.title)}</b><div class='muted'>${esc(j.goal||'')}</div><div class='muted'>owner: ${esc(j.owner_agent||'main')} • risco: ${esc(j.risk_level||'-')}</div><div class='muted'>id: ${esc(j.job_id||'')}</div>`;
+      col.appendChild(div);
+    });
+    board.appendChild(col);
+  }
+  document.getElementById('events').innerText = h.events.map(e=>`${e.ts||''} | ${e.event||''} | ${e.job_id||''}`).join('\n');
+}
+loadAll();
+setInterval(loadAll, 15000);
+</script>
+</body>
+</html>
